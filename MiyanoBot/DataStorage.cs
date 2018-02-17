@@ -20,13 +20,13 @@ namespace MiyanoBot
 
 		public static int GetPairsCount()
 		{
-			return pairs.Count();
+			return pairs.Count;
 		}
 
 		static DataStorage()
 		{
 			// Load data
-			if (ValidateStorageFile("DataStorage.json")) return;
+			if (!ValidateStorageFile("DataStorage.json")) return;
 			string json = File.ReadAllText("DataStorage.json");
 			pairs = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
 		}
