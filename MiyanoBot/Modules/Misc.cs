@@ -14,6 +14,31 @@ namespace MiyanoBot.Modules
 {
 	public class Misc : ModuleBase<SocketCommandContext>
 	{
+		[Command("do")]
+		public async Task Do_question(string p1, string p2, [Remainder]string p3)
+		{
+			string LV = "do";
+
+			// Determines if what she's going to say is positive or negative
+			Random r = new Random();
+			bool positive = (r.Next(1, 101) >= 50 ? true : false);
+
+			// Changes I to you and vice versa
+			if (p1.ToLower() == "you") p1 = "I";
+			else if (p1.ToLower() == "i") p1 = "You";
+
+			// Removes question mark from end
+			p3 = p3.Trim('?');
+
+			// Changes to negative if necessary
+			if (!positive)
+			{
+				LV = "don't";
+			}
+
+			await Context.Channel.SendMessageAsync($"{p1} {LV} {p2} {p3}.");
+		}
+
 		[Command("hey")]
 		public async Task Hey(string color = "red")
 		{
