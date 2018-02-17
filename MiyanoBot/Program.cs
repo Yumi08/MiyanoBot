@@ -10,6 +10,7 @@ namespace MiyanoBot
 	{
 		static void Main(string[] args)
 		{
+
 		}
 	}
 }
