@@ -24,7 +24,7 @@ namespace MiyanoBot.Modules
 		[Command("hello")]
 		public async Task Hello()
 		{
-			await Context.Channel.SendMessageAsync($"Hello {Context.User.Username}!");
+			await Context.Channel.SendMessageAsync(Utilities.GetFormattedAlert("HELLO_&NAME", Context.User.Username));
 		}
 
 		[Command("pick")]

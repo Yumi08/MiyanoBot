@@ -1,3 +1,4 @@
 {
-	"TEST":"Hello World!"
+	"TEST": "Hello World!",
+	"HELLO_&NAME": "Hello {0}!"
 }
