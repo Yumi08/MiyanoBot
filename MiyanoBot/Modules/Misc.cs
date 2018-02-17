@@ -69,6 +69,13 @@ namespace MiyanoBot.Modules
 			await Context.Channel.SendMessageAsync(Utilities.GetFormattedAlert("PERCENT_&THING_&PERCENTAGE_&AMOUNT", thing, percent, amount));
 		}
 
+		[Command("data")]
+		public async Task GetData()
+		{
+			await Context.Channel.SendMessageAsync("Data has " + DataStorage.GetPairsCount() + " pairs");
+			DataStorage.AddPairToStorage("Count" + DataStorage.GetPairsCount(), "TheCount" + DataStorage.GetPairsCount());
+		}
+
 		//[Command("secret")]
 		//public async Task RevealSecret([Remainder]string arg = "")
 		//{
