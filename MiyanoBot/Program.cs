@@ -10,7 +10,8 @@ namespace MiyanoBot
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine(Utilities.GetAlert("TEST"));
+			Console.WriteLine("Test: " + Config.bot.token);
+			Console.ReadLine();
 		}
 	}
 }
