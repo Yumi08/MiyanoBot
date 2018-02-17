@@ -32,9 +32,6 @@ namespace MiyanoBot
 				string json = File.ReadAllText(configFolder + "/" + configFile);
 				bot = JsonConvert.DeserializeObject<BotConfig>(json);
 			}
-
-			//if(File.Exists(""))
-
 		}
 	}
 
