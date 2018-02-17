@@ -19,7 +19,7 @@ namespace MiyanoBot.Modules
 		{
 			// Sets mod to a degree
 			Random r = new Random();
-			string[] Degree = { "really", "completely", "absolutely", "deeply", "sorta", "kinda", "barely", "hardly", "don't" };
+			string[] Degree = { "really", "definitely", "absolutely", "sorta", "kinda", "barely", "hardly", "don't", "definitely don't", "absolutely don't" };
 			string mod = Degree[r.Next(1, Degree.Length)];
 
 			// Removes question mark from end
@@ -30,8 +30,10 @@ namespace MiyanoBot.Modules
 			else if (p1.ToLower() == "i") p1 = "You";
 
 			// Changes me to you and vice versa in p3
-			if (p3.ToLower() == "me") p3 = "you";
-			else if (p3.ToLower() == "you") p3 = "me";
+			if (p3.ToLower().Contains("me")) p3 = p3.Replace("me", "you");
+			else if (p3.ToLower().Contains("you")) p3 = p3.Replace("you", "me");
+
+			if (p3.ToLower().Contains("i")) p3 = p3.Replace("I", "you");
 
 			// Change your to my and vice versa in p3
 			if (p3.ToLower().Contains("your")) p3 = p3.Replace("your", "my");
