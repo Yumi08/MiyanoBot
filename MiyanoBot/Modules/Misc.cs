@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,11 +8,26 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using MiyanoBot.Core.UserAccounts;
+using NReco.ImageGenerator;
 
 namespace MiyanoBot.Modules
 {
 	public class Misc : ModuleBase<SocketCommandContext>
 	{
+		[Command("hey")]
+		public async Task Hey(string color = "red")
+		{
+			string css = "<style>\n    h1{\n        color: " + color + ";\n    }\n</style>\n";
+			string html = String.Format("<h1>Hello {0}!</h1>", Context.User.Username);
+			var converter = new HtmlToImageConverter
+			{
+				Width = 250,
+				Height = 70
+			};
+			var jpgBytes = converter.GenerateImage(css + html, NReco.ImageGenerator.ImageFormat.Jpeg);
+			await Context.Channel.SendFileAsync(new MemoryStream(jpgBytes), "hello.jpg");
+		}
+
 		[Command("stats")]
 		public async Task Stats([Remainder]string arg = "")
 		{
