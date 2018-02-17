@@ -6,16 +6,34 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using MiyanoBot.Core.UserAccounts;
 
 namespace MiyanoBot.Modules
 {
 	public class Misc : ModuleBase<SocketCommandContext>
 	{
+		[Command("myStats")]
+		public async Task MyXP()
+		{
+			var account = UserAccounts.GetAccount(Context.User);
+			await Context.Channel.SendMessageAsync($"You have {account.XP} XP, and {account.Points} points.");
+		}
+
+		[Command("addXP")]
+		[RequireUserPermission(GuildPermission.Administrator)]
+		public async Task AddXP(uint xp)
+		{
+			var account = UserAccounts.GetAccount(Context.User);
+			account.XP += xp;
+			UserAccounts.SaveAccounts();
+			await Context.Channel.SendMessageAsync($"You gained {xp} xp.");
+		}
+
 		[Command("echo")]
 		public async Task Echo([Remainder]string message)
 		{
 			var embed = new EmbedBuilder();
-			embed.WithTitle("Echoed message");
+			embed.WithTitle("Echoed message by " + Context.User.Username);
 			embed.WithDescription(message);
 			embed.WithColor(new Color(223, 193, 159));
 
@@ -43,7 +61,6 @@ namespace MiyanoBot.Modules
 			embed.WithThumbnailUrl(Context.User.GetAvatarUrl());
 
 			await Context.Channel.SendMessageAsync("", false, embed);
-			DataStorage.AddPairToStorage(Context.User.Username + " at " + DateTime.Now.ToString(), selection);
 		}
 
 		[Command("cookie")]
