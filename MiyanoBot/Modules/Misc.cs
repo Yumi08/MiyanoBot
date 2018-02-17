@@ -43,6 +43,7 @@ namespace MiyanoBot.Modules
 			embed.WithThumbnailUrl(Context.User.GetAvatarUrl());
 
 			await Context.Channel.SendMessageAsync("", false, embed);
+			DataStorage.AddPairToStorage(Context.User.Username + " at " + DateTime.Now.ToString(), selection);
 		}
 
 		[Command("cookie")]
@@ -73,7 +74,6 @@ namespace MiyanoBot.Modules
 		public async Task GetData()
 		{
 			await Context.Channel.SendMessageAsync("Data has " + DataStorage.GetPairsCount() + " pairs");
-			DataStorage.AddPairToStorage("Count" + DataStorage.GetPairsCount(), "TheCount" + DataStorage.GetPairsCount());
 		}
 
 		//[Command("secret")]
