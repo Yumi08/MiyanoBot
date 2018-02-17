@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 
 namespace MiyanoBot.Modules
 {
@@ -43,5 +44,25 @@ namespace MiyanoBot.Modules
 
 			await Context.Channel.SendMessageAsync("", false, embed);
 		}
+
+		//[Command("secret")]
+		//public async Task RevealSecret([Remainder]string arg = "")
+		//{
+		//	if (!UserIsAAA((SocketGuildUser)Context.User)) return;
+		//	var dmChannel = await Context.User.GetOrCreateDMChannelAsync();
+		//	await dmChannel.SendMessageAsync(Utilities.GetAlert("SECRET"));
+		//}
+
+		//private bool UserIsAAA(SocketGuildUser user)
+		//{
+		//	string targetRoleName = "aaa";
+		//	var result = from r in user.Guild.Roles
+		//				 where r.Name == targetRoleName
+		//				 select r.Id;
+		//	ulong roleID = result.FirstOrDefault();
+		//	if (roleID == 0) return false;
+		//	var targetRole = user.Guild.GetRole(roleID);
+		//	return user.Roles.Contains(targetRole);
+		//}
 	}
 }

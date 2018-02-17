@@ -1,4 +1,5 @@
 {
 	"TEST": "Hello World!",
-	"HELLO_&NAME": "Hello {0}!"
+	"HELLO_&NAME": "Hello {0}!",
+	"SECRET": "The secret is `feet`."
 }
