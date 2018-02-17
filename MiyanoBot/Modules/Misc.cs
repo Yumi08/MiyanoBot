@@ -31,7 +31,7 @@ namespace MiyanoBot.Modules
 		[Command("pick")]
 		public async Task PickOne([Remainder]string message)
 		{
-			string[] options = message.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+			string[] options = message.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
 			Random r = new Random();
 			string selection = options[r.Next(0, options.Length)];
@@ -43,6 +43,30 @@ namespace MiyanoBot.Modules
 			embed.WithThumbnailUrl(Context.User.GetAvatarUrl());
 
 			await Context.Channel.SendMessageAsync("", false, embed);
+		}
+
+		[Command("cookie")]
+		public async Task Cookie()
+		{
+			await Context.Channel.SendMessageAsync(Utilities.GetAlert("COOKIE"));
+		}
+
+		[Command("rate")]
+		public async Task Rate([Remainder]string message)
+		{
+			Random r = new Random();
+			string rating = String.Format("{0}/10", r.Next(1, 11));
+
+			await Context.Channel.SendMessageAsync(Utilities.GetFormattedAlert("RATE_&NAME_&RATING", message, rating));
+		}
+
+		[Command("percent")]
+		public async Task Percent(string thing, string amount)
+		{
+			Random r = new Random();
+			string percent = String.Format("{0}%", r.Next(1, 101));
+
+			await Context.Channel.SendMessageAsync(Utilities.GetFormattedAlert("PERCENT_&THING_&PERCENTAGE_&AMOUNT", thing, percent, amount));
 		}
 
 		//[Command("secret")]

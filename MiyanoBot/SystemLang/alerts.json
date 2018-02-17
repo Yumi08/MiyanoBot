@@ -1,5 +1,8 @@
 {
 	"TEST": "Hello World!",
 	"HELLO_&NAME": "Hello {0}!",
-	"SECRET": "The secret is `feet`."
+	"SECRET": "The secret is `egg`.",
+	"COOKIE": "https://www.youtube.com/watch?v=2jlg6VPHBZ8",
+	"RATE_&NAME_&RATING": "I rate {0} to be a {1}",
+	"PERCENT_&THING_&PERCENTAGE_&AMOUNT": "{0} has {1} {2}"
 }
