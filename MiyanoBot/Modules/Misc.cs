@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using Discord.Rest;
 using Discord.WebSocket;
 using MiyanoBot.Core.UserAccounts;
 using NReco.ImageGenerator;
@@ -12,6 +13,13 @@ namespace MiyanoBot.Modules
 {
 	public class Misc : ModuleBase<SocketCommandContext>
 	{
+		[Command("react")]
+		public async Task HandleReactionMessage()
+		{
+			RestUserMessage msg = await Context.Channel.SendMessageAsync("React to me with :ok_hand:!");
+			Global.MessageIdToTrack = msg.Id;
+		}
+
 		[Command("do")]
 		public async Task Do_question(string p1, string p2, [Remainder]string p3)
 		{
