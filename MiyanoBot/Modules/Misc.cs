@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -41,7 +39,7 @@ namespace MiyanoBot.Modules
 			{
 				// Sets mod to a degree
 				Random r = new Random();
-				string[] Degree = { "honestly really want to", "want to", "don't want to", "don't really want to" };
+				string[] Degree = { "definitely will", "honestly really want to", "want to", "don't want to", "don't really want to", "definitely don't want to", "will never" };
 				string mod = Degree[r.Next(1, Degree.Length)];
 
 				// Adding a space ensures that the GrammarReq can remove it
@@ -51,16 +49,7 @@ namespace MiyanoBot.Modules
 				await Context.Channel.SendMessageAsync($"{p1} {mod} {p2}{p3}.");
 			}
 			else
-			{
-				// Sets mod to a degree
-				//Random r = new Random();
-				//string[] Degree = { "can", "can't" };
-				//string mod = Degree[r.Next(1, Degree.Length)];
-
-				//MiscUtils.Grammar(ref p3);
-
-				//await Context.Channel.SendMessageAsync($"I {mod} {p2} {p3}.");
-
+			{	
 				Random r = new Random();
 				string[] Degree = { "definitely", "yes", "maybe", "no", "definitely not" };
 				string mod = Degree[r.Next(1, Degree.Length)];
@@ -79,6 +68,36 @@ namespace MiyanoBot.Modules
 
 			await Context.Channel.SendMessageAsync(mod);
 		}
+
+		//[Command("are")]
+		//public async Task Are_question(string p1, string p2, [Remainder]string p3)
+		//{
+		//	bool positive;
+		//	string mod;
+
+		//	// Removes question mark from end
+		//	p3 = p3.Trim('?');
+
+
+		//	Random r = new Random();
+		//	if (r.Next(1, 101) >= 50) positive = true;
+		//	else positive = false;
+		//	// Sets mod to a degree
+		//	if (positive)
+		//	{
+		//		string[] PosDegree = { "are", "are really" };
+		//		mod = PosDegree[r.Next(1, PosDegree.Length)];
+		//	}
+		//	else
+		//	{
+		//		string[] NegDegree = { "aren't", "aren't really" };
+		//		mod = NegDegree[r.Next(1, NegDegree.Length)];
+		//	}
+
+		//	MiscUtils.GrammarAre(ref p1, ref mod, ref p3, positive);
+
+		//	await Context.Channel.SendMessageAsync($"{p1} {mod} {p2} {p3}.");
+		//}
 
 		[Command("hey")]
 		public async Task Hey(string color = "red")
