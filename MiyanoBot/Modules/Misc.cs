@@ -25,7 +25,7 @@ namespace MiyanoBot.Modules
 			string[] Degree = { "really", "definitely", "absolutely", "sorta", "kinda", "barely", "hardly", "don't", "definitely don't", "absolutely don't" };
 			string mod = Degree[r.Next(1, Degree.Length)];
 
-			MiscUtils.Grammar(ref p1, ref p3);
+			MiscUtils.GrammarDo(ref p1, ref p3);
 
 			await Context.Channel.SendMessageAsync($"{p1} {mod} {p2} {p3}.");
 		}
@@ -44,9 +44,11 @@ namespace MiyanoBot.Modules
 				string[] Degree = { "want to", "don't want to", };
 				string mod = Degree[r.Next(1, Degree.Length)];
 
-				MiscUtils.Grammar(ref p1, ref p3);
+				// Adding a space ensures that the GrammarReq can remove it
+				p2 += " ";
+				MiscUtils.GrammarReq(ref p2, ref p3);
 
-				await Context.Channel.SendMessageAsync($"{p1} {mod} {p2} {p3}.");
+				await Context.Channel.SendMessageAsync($"{p1} {mod} {p2}{p3}.");
 			}
 			else
 			{
