@@ -30,7 +30,7 @@ namespace MiyanoBot.Core.LevelingSystem
 				embed.AddInlineField("Level: ", newLevel);
 				embed.AddInlineField("XP: ", userAccount.XP);
 
-				await channel.SendMessageAsync("", embed: embed);
+				//await channel.SendMessageAsync("", embed: embed);
 			}
 		}
 	}

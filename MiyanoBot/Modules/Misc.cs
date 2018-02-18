@@ -13,12 +13,12 @@ namespace MiyanoBot.Modules
 {
 	public class Misc : ModuleBase<SocketCommandContext>
 	{
-		[Command("level")]
-		public async Task WhatLevelIs(uint xp)
-		{
-			uint level = (uint)Math.Sqrt(xp / 50);
-			await Context.Channel.SendMessageAsync("The level is " + level);
-		}
+		//[Command("level")]
+		//public async Task WhatLevelIs(uint xp)
+		//{
+		//	uint level = (uint)Math.Sqrt(xp / 50);
+		//	await Context.Channel.SendMessageAsync("The level is " + level);
+		//}
 
 		[Command("react")]
 		public async Task HandleReactionMessage()
@@ -34,13 +34,22 @@ namespace MiyanoBot.Modules
 			p3 = p3.Trim('?');
 
 			// Sets mod to a degree
-			Random r = new Random();
 			string[] Degree = { "really", "definitely", "absolutely", "sorta", "kinda", "barely", "hardly", "don't", "definitely don't", "absolutely don't" };
-			string mod = Degree[r.Next(1, Degree.Length)];
+			string mod = Degree[Global.r.Next(0, Degree.Length)];
 
 			MiscUtils.GrammarDo(ref p1, ref p3);
 
 			await Context.Channel.SendMessageAsync($"{p1} {mod} {p2} {p3}.");
+		}
+
+		[Command("do")]
+		public async Task Do_question(string p1, string p2)
+		{
+			// Says yes or no etc
+			string[] Degree = { "definitely", "yes", "maybe", "no", "definitely not" };
+			string mod = Degree[Global.r.Next(0, Degree.Length)];
+
+			await Context.Channel.SendMessageAsync(mod);
 		}
 
 		[Command("can")]
@@ -53,9 +62,8 @@ namespace MiyanoBot.Modules
 			if (p1.ToLower().Contains("you"))
 			{
 				// Sets mod to a degree
-				Random r = new Random();
-				string[] Degree = { "definitely will", "honestly really want to", "want to", "don't want to", "don't really want to", "definitely don't want to", "will never" };
-				string mod = Degree[r.Next(1, Degree.Length)];
+				string[] Degree = { "undoubtedly will", "definitely will", "really want to", "want to", "don't want to", "don't really want to", "will never" };
+				string mod = Degree[Global.r.Next(0, Degree.Length)];
 
 				// Adding a space ensures that the GrammarReq can remove it
 				p2 += " ";
@@ -65,9 +73,9 @@ namespace MiyanoBot.Modules
 			}
 			else
 			{	
-				Random r = new Random();
+				// Says yes or no etc
 				string[] Degree = { "definitely", "yes", "maybe", "no", "definitely not" };
-				string mod = Degree[r.Next(1, Degree.Length)];
+				string mod = Degree[Global.r.Next(0, Degree.Length)];
 
 				await Context.Channel.SendMessageAsync(mod);
 			}
@@ -77,9 +85,9 @@ namespace MiyanoBot.Modules
 		[Alias("could", "may")]
 		public async Task Can_question(string p1, string p2)
 		{
-			Random r = new Random();
-			string[] Degree = { "definitely", "yes", "maybe", "no", "definitely not" };
-			string mod = Degree[r.Next(1, Degree.Length)];
+			// Says yes or no etc
+			string[] Degree = { "definitely", "please do", "yes", "I guess", "maybe", "no", "please don't", "definitely not" };
+			string mod = Degree[Global.r.Next(0, Degree.Length)];
 
 			await Context.Channel.SendMessageAsync(mod);
 		}
@@ -136,18 +144,18 @@ namespace MiyanoBot.Modules
 			target = mentionedUser ?? Context.User;
 
 			var account = UserAccounts.GetAccount(target);
-			await Context.Channel.SendMessageAsync($"{target.Username} has {account.XP} XP, and {account.Points} points.");
+			await Context.Channel.SendMessageAsync($"{target.Username} has {account.XP} XP, is level {account.LevelNumber}, and has {account.Points} points.");
 		}
 
-		[Command("addXP")]
-		[RequireUserPermission(GuildPermission.Administrator)]
-		public async Task AddXP(uint xp)
-		{
-			var account = UserAccounts.GetAccount(Context.User);
-			account.XP += xp;
-			UserAccounts.SaveAccounts();
-			await Context.Channel.SendMessageAsync($"You gained {xp} xp.");
-		}
+		//[Command("addXP")]
+		//[RequireUserPermission(GuildPermission.Administrator)]
+		//public async Task AddXP(uint xp)
+		//{
+		//	var account = UserAccounts.GetAccount(Context.User);
+		//	account.XP += xp;
+		//	UserAccounts.SaveAccounts();
+		//	await Context.Channel.SendMessageAsync($"You gained {xp} xp.");
+		//}
 
 		[Command("echo")]
 		public async Task Echo([Remainder]string message)
@@ -167,12 +175,12 @@ namespace MiyanoBot.Modules
 		}
 
 		[Command("pick")]
+		[Alias("choice")]
 		public async Task PickOne([Remainder]string message)
 		{
 			string[] options = message.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-			Random r = new Random();
-			string selection = options[r.Next(0, options.Length)];
+			string selection = options[Global.r.Next(0, options.Length)];
 			
 			var embed = new EmbedBuilder();
 			embed.WithTitle("Choice for " + Context.User.Username);
@@ -192,26 +200,25 @@ namespace MiyanoBot.Modules
 		[Command("rate")]
 		public async Task Rate([Remainder]string message)
 		{
-			Random r = new Random();
-			string rating = String.Format("{0}/10", r.Next(1, 11));
+			
+			string rating = String.Format("{0}/10", Global.r.Next(0, 11));
 
 			await Context.Channel.SendMessageAsync(Utilities.GetFormattedAlert("RATE_&NAME_&RATING", message, rating));
 		}
 
 		[Command("percent")]
-		public async Task Percent(string thing, string amount)
+		public async Task Percent(string thing, [Remainder]string amount)
 		{
-			Random r = new Random();
-			string percent = String.Format("{0}%", r.Next(1, 101));
+			string percent = String.Format("{0}%", Global.r.Next(0, 101));
 
 			await Context.Channel.SendMessageAsync(Utilities.GetFormattedAlert("PERCENT_&THING_&PERCENTAGE_&AMOUNT", thing, percent, amount));
 		}
 
-		[Command("data")]
-		public async Task GetData()
-		{
-			await Context.Channel.SendMessageAsync("Data has " + DataStorage.GetPairsCount() + " pairs");
-		}
+		//[Command("data")]
+		//public async Task GetData()
+		//{
+		//	await Context.Channel.SendMessageAsync("Data has " + DataStorage.GetPairsCount() + " pairs");
+		//}
 
 		//[Command("secret")]
 		//public async Task RevealSecret([Remainder]string arg = "")

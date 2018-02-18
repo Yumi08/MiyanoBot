@@ -11,5 +11,7 @@ namespace MiyanoBot
 	{
 		internal static DiscordSocketClient Client { get; set; }
 		internal static ulong MessageIdToTrack { get; set; }
+
+		public static Random r = new Random();
 	}
 }
