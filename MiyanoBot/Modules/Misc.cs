@@ -25,20 +25,7 @@ namespace MiyanoBot.Modules
 			string[] Degree = { "really", "definitely", "absolutely", "sorta", "kinda", "barely", "hardly", "don't", "definitely don't", "absolutely don't" };
 			string mod = Degree[r.Next(1, Degree.Length)];
 
-			// Changes I to you and vice versa in p1
-			if (p1.ToLower() == "you") p1 = "I";
-			else if (p1.ToLower() == "i") p1 = "You";
-
-			// Changes me to you and vice versa in p3
-			if (p3.ToLower().Contains("me")) p3 = p3.Replace("me", "you");
-			else if (p3.ToLower().Contains("you")) p3 = p3.Replace("you", "me");
-
-			// Changes I to you and vice versa in p1
-			if (p3.ToLower().Contains("i")) p3 = p3.Replace("I", "you");
-
-			// Change your to my and vice versa in p3
-			if (p3.ToLower().Contains("your")) p3 = p3.Replace("your", "my");
-			else if (p3.ToLower().Contains("my")) p3 = p3.Replace("my", "your");
+			MiscUtils.Grammar(ref p1, ref p3);
 
 			await Context.Channel.SendMessageAsync($"{p1} {mod} {p2} {p3}.");
 		}
@@ -50,50 +37,45 @@ namespace MiyanoBot.Modules
 			// Removes question mark from end
 			p3 = p3.Trim('?');
 
-			if (!p3.ToLower().Contains("you"))
+			if (p1.ToLower().Contains("you"))
 			{
 				// Sets mod to a degree
 				Random r = new Random();
-				string[] Degree = { "can", "can't" };
+				string[] Degree = { "want to", "don't want to", };
 				string mod = Degree[r.Next(1, Degree.Length)];
 
-				// Changes I to you and vice versa in p1
-				if (p1.ToLower() == "you") p1 = "I";
-				else if (p1.ToLower() == "i") p1 = "You";
-
-				// Changes me to you and vice versa in p3
-				if (p3.ToLower().Contains("me")) p3 = p3.Replace("me", "you");
-				else if (p3.ToLower().Contains("you")) p3 = p3.Replace("you", "me");
-
-				// Replace I with you in p3
-				if (p3.ToLower().Contains("i")) p3 = p3.Replace("I", "you");
-
-				// Change your to my and vice versa in p3
-				if (p3.ToLower().Contains("your")) p3 = p3.Replace("your", "my");
-				else if (p3.ToLower().Contains("my")) p3 = p3.Replace("my", "your");
+				MiscUtils.Grammar(ref p1, ref p3);
 
 				await Context.Channel.SendMessageAsync($"{p1} {mod} {p2} {p3}.");
 			}
 			else
 			{
 				// Sets mod to a degree
+				//Random r = new Random();
+				//string[] Degree = { "can", "can't" };
+				//string mod = Degree[r.Next(1, Degree.Length)];
+
+				//MiscUtils.Grammar(ref p3);
+
+				//await Context.Channel.SendMessageAsync($"I {mod} {p2} {p3}.");
+
 				Random r = new Random();
-				string[] Degree = { "really want you to", "honestly want you to", "want you to", "don't want you to", "honestly don't want you to", "really don't want you to" };
+				string[] Degree = { "definitely", "yes", "maybe", "no", "definitely not" };
 				string mod = Degree[r.Next(1, Degree.Length)];
 
-				// Changes me to you and vice versa in p3
-				if (p3.ToLower().Contains("me")) p3 = p3.Replace("me", "you");
-				else if (p3.ToLower().Contains("you")) p3 = p3.Replace("you", "me");
-
-				// Replace I with you in p3
-				if (p3.ToLower().Contains("i")) p3 = p3.Replace("I", "you");
-
-				// Change your to my and vice versa in p3
-				if (p3.ToLower().Contains("your")) p3 = p3.Replace("your", "my");
-				else if (p3.ToLower().Contains("my")) p3 = p3.Replace("my", "your");
-
-				await Context.Channel.SendMessageAsync($"I {mod} {p2} {p3}.");
+				await Context.Channel.SendMessageAsync(mod);
 			}
+		}
+
+		[Command("can")]
+		[Alias("could", "may")]
+		public async Task Can_question(string p1, string p2)
+		{
+			Random r = new Random();
+			string[] Degree = { "definitely", "yes", "maybe", "no", "definitely not" };
+			string mod = Degree[r.Next(1, Degree.Length)];
+
+			await Context.Channel.SendMessageAsync(mod);
 		}
 
 		[Command("hey")]
