@@ -41,12 +41,12 @@ namespace MiyanoBot.Modules
 			{
 				// Sets mod to a degree
 				Random r = new Random();
-				string[] Degree = { "want to", "don't want to", };
+				string[] Degree = { "honestly really want to", "want to", "don't want to", "don't really want to" };
 				string mod = Degree[r.Next(1, Degree.Length)];
 
 				// Adding a space ensures that the GrammarReq can remove it
 				p2 += " ";
-				MiscUtils.GrammarReq(ref p2, ref p3);
+				MiscUtils.GrammarReq(ref p1, ref p2, ref p3);
 
 				await Context.Channel.SendMessageAsync($"{p1} {mod} {p2}{p3}.");
 			}

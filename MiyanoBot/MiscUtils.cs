@@ -30,14 +30,18 @@ namespace MiyanoBot
 			else if (p3.Contains("myself")) p3 = p3.Replace("myself", "yourself");
 		}
 
-		public static void GrammarReq(ref string p2, ref string p3)
+		public static void GrammarReq(ref string p1, ref string p2, ref string p3)
 		{
+			// Changes I to you and vice versa in p1
+			if (p1.ToLower() == "you") p1 = "I";
+			else if (p1.ToLower() == "i") p1 = "You";
+
 			// Removes please from p2
 			if (p2.Contains("please")) p2 = p2.Replace("please ", "");
 
 			// Changes me to you and vice versa in p3
-			if (p3.Contains("me ")) p3 = p3.Replace("me", "you");
-			else if (p3.Contains("you ")) p3 = p3.Replace("you", "me");
+			if (p3.Contains("me")) p3 = p3.Replace("me", "you");
+			else if (p3.Contains("you")) p3 = p3.Replace("you", "me");
 
 			// Changes I to you and vice versa in p3
 			if (p3.Contains("I ")) p3 = p3.Replace("I", "you");
