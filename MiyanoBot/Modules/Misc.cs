@@ -13,12 +13,46 @@ namespace MiyanoBot.Modules
 {
 	public class Misc : ModuleBase<SocketCommandContext>
 	{
-		//[Command("level")]
-		//public async Task WhatLevelIs(uint xp)
-		//{
-		//	uint level = (uint)Math.Sqrt(xp / 50);
-		//	await Context.Channel.SendMessageAsync("The level is " + level);
-		//}
+		[Command("Warn")]
+		[RequireUserPermission(GuildPermission.Administrator)]
+		[RequireBotPermission(GuildPermission.KickMembers)]
+		public async Task WarnUser(IGuildUser user)
+		{
+			var userAccount = UserAccounts.GetAccount((SocketUser)user);
+			userAccount.NumberOfWarnings++;
+			UserAccounts.SaveAccounts();
+
+			if (userAccount.NumberOfWarnings >= 5)
+			{
+				await user.KickAsync();
+			}
+			else if (userAccount.NumberOfWarnings == 4)
+			{
+				var dmChannel = await Context.User.GetOrCreateDMChannelAsync();
+				await dmChannel.SendMessageAsync(Utilities.GetAlert("You will be kicked if you receive one or more warnings."));
+			}
+			else if (userAccount.NumberOfWarnings == 1)
+			{
+				var dmChannel = await Context.User.GetOrCreateDMChannelAsync();
+				await dmChannel.SendMessageAsync(Utilities.GetAlert("Please note that getting 5 or more warnings results in a kick."));
+			}
+		}
+
+		[Command("kick")]
+		[RequireUserPermission(GuildPermission.KickMembers)]
+		[RequireBotPermission(GuildPermission.KickMembers)]
+		public async Task KickUser(IGuildUser user, string reason = "No reason given.")
+		{
+			await user.KickAsync(reason);
+		}
+
+		[Command("ban")]
+		[RequireUserPermission(GuildPermission.BanMembers)]
+		[RequireBotPermission(GuildPermission.BanMembers)]
+		public async Task BanUser(IGuildUser user, string reason = "No reason given.")
+		{
+			await user.Guild.AddBanAsync(user, 2, reason);
+		}
 
 		[Command("react")]
 		public async Task HandleReactionMessage()
@@ -146,6 +180,13 @@ namespace MiyanoBot.Modules
 			var account = UserAccounts.GetAccount(target);
 			await Context.Channel.SendMessageAsync($"{target.Username} has {account.XP} XP, is level {account.LevelNumber}, and has {account.Points} points.");
 		}
+
+		//[Command("level")]
+		//public async Task WhatLevelIs(uint xp)
+		//{
+		//	uint level = (uint)Math.Sqrt(xp / 50);
+		//	await Context.Channel.SendMessageAsync("The level is " + level);
+		//}
 
 		//[Command("addXP")]
 		//[RequireUserPermission(GuildPermission.Administrator)]

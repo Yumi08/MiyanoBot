@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using MiyanoBot.Core.LevelingSystem;
+using MiyanoBot.Core.UserAccounts;
 
 namespace MiyanoBot
 {
@@ -29,6 +30,14 @@ namespace MiyanoBot
 			if (msg == null) return;
 			var context = new SocketCommandContext(_client, msg);
 			if (context.User.IsBot) return;
+
+			// Mute check
+			var userAccount = UserAccounts.GetAccount(context.User);
+			if (userAccount.IsMuted)
+			{
+				await context.Message.DeleteAsync();
+				return;
+			}
 
 			// Leveling up
 			Leveling.UserSentMessage((SocketGuildUser)context.User, (SocketTextChannel)context.Channel);

@@ -21,5 +21,9 @@ namespace MiyanoBot.Core.UserAccounts
 				return (uint)Math.Sqrt(XP / 50);
 			}
 		}
+
+		public bool IsMuted { get; set; }
+
+		public uint NumberOfWarnings { get; set; }
 	}
 }
